@@ -1,2 +1,9 @@
-/app/
-/public/
+.buildpath
+.DS_Store
+.project
+.settings
+.idea
+/api
+/public/api
+/public/assets/dist
+/node_modules

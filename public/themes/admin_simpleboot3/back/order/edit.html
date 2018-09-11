@@ -1,0 +1,125 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li><a href="javascript:history.back(-1)">订单列表</a></li>
+		<li><a href="{:url('add', ['action'=>$action])}">添加订单</a></li>
+		<li  class="active"><a>编辑</a></li>
+	</ul>
+	<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url(request()->action())}">
+		<input type="hidden" name="id" value="{$info['id']}">
+		<input type="hidden" name="action" value="{$action}">
+		<div class="form-group">
+			<label class="col-sm-2 control-label"><span class="form-required">*</span>客户姓名:</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" name="name" value="{$info['name']}" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">性别:</label>
+			<div class="col-md-6 col-sm-10">
+				<label class="radio-inline">
+					<input type="radio" name="sex" value="1" <if condition="$info['sex'] eq 1">checked</if> > 男
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="sex" value="2" <if condition="$info['sex'] eq 2">checked</if> > 女
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">电话号码:</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" name="tel" value="{$info['tel']}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">年龄:</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control" name="age" value="{$info['age']}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">套餐:</label>
+			<div class="col-md-6 col-sm-10">
+				<select name="setmeal_id" class="form-control">
+					<volist name="setmeal" id="vo">
+						<option value="{$vo['id']}" <if condition="$vo['id'] eq $info['setmeal_id']">selected</if> >{$vo['name']}</option>
+					</volist>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">下单时间:</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control js-bootstrap-datetime" name="add_time" value="{:showTime($info['add_time'])}" required>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">拍摄时间:</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control js-bootstrap-datetime" name="order_time" value="{:showTime($info['order_time'])}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">发相日期:</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control js-bootstrap-datetime" name="send_photo_time" value="{:showTime($info['send_photo_time'])}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">选相日期:</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control js-bootstrap-datetime" name="opt_photo_time" value="{:showTime($info['opt_photo_time'])}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">精修日期:</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control js-bootstrap-datetime" name="ps_photo_time" value="{:showTime($info['ps_photo_time'])}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">下厂日期:</label>
+			<div class="col-md-6 col-sm-10">
+				<input type="text" class="form-control js-bootstrap-datetime" name="lower_factory_time" value="{:showTime($info['lower_factory_time'])}">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">通知客户取相:</label>
+			<div class="col-md-6 col-sm-10">
+				<label class="radio-inline">
+					<input type="radio" name="is_notice" value="0" <if condition="$info['is_notice'] eq 0">checked</if> > 否
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="is_notice" value="1" <if condition="$info['is_notice'] eq 1">checked</if> > 是
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">已签收:</label>
+			<div class="col-md-6 col-sm-10">
+				<label class="radio-inline">
+					<input type="radio" name="status" value="0" <if condition="$info['status'] eq 0">checked</if> > 否
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="status" value="1" <if condition="$info['status'] eq 1">checked</if> > 是
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">备注:</label>
+			<div class="col-md-6 col-sm-10">
+				<textarea name="remark" style="width: 100%; height: 200px;"></textarea>
+			</div>
+		</div>
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary js-ajax-submit">{:lang("SAVE")}</button>
+			<a class="btn btn-default" href="__URL__">返回</a>
+		</div>
+	</form>
+
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>
