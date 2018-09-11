@@ -29,15 +29,24 @@ class OrderController extends AdminBaseController
      * 订单列表
      */
     public function lists($status){
+        $search = array();
         if ($this->request->isPost()){
             $search = $this->request->param();
             $where = $this->search($search);
-            $this->assign('search', $where);
+            $this->assign([
+                'name' => isset($search['name']) ? $search['name'] : '',
+                'setmeal_id' => isset($search['setmeal_id']) ? $search['setmeal_id'] : '',
+                'add_time_start' => isset($search['add_time_start']) ? $search['add_time_start'] : '',
+                'add_time_end' => isset($search['add_time_end']) ? $search['add_time_end'] : '',
+                'order_time_start' => isset($search['order_time_start']) ? $search['order_time_start'] : '',
+                'order_time_end' => isset($search['order_time_end']) ? $search['order_time_end'] : '',
+            ]);
 
         }
         //订单状态
         $where['status'] = $status;
         $order = Db::name('ten_order')->where($where)->order('order_time desc')->paginate();
+        $order->appends($search);
         //订单数量
         $count = Db::name('ten_order')->where($where)->count();
         //套餐
